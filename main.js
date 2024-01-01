@@ -6,6 +6,7 @@ const canvas = new fabric.Canvas("canvas", {
   width: window.innerWidth,
   height: window.innerHeight - 150,
   backgroundColor: "rgb(255,255,255)",
+  preserveObjectStacking: true,
 });
 const defaultTextBoxOption = {
   left: 50,
@@ -29,6 +30,8 @@ const imageInput = document.getElementById("img-input");
 const imageRemove = document.getElementById("imageRemove");
 const objectCopy = document.getElementById("object-copy");
 const objectPaste = document.getElementById("object-paste");
+const objectFront = document.getElementById("object-front");
+const objectBack = document.getElementById("object-back");
 const textAdd = document.getElementById("text-add");
 const fontSelect = document.getElementById("font-family");
 const fontColor = document.getElementById("font-color");
@@ -54,6 +57,17 @@ imageRemove.addEventListener("click", handleRemove);
 
 objectCopy.addEventListener("click", Copy);
 objectPaste.addEventListener("click", Paste);
+
+objectFront.addEventListener("click", function () {
+  const currentObject = canvas.getActiveObject();
+  const currentIndex = canvas.getObjects().indexOf(currentObject);
+  currentObject.moveTo(currentIndex + 1);
+});
+objectBack.addEventListener("click", function () {
+  const currentObject = canvas.getActiveObject();
+  const currentIndex = canvas.getObjects().indexOf(currentObject);
+  currentObject.moveTo(currentIndex - 1);
+});
 
 textAdd.addEventListener("click", function () {
   addText();
