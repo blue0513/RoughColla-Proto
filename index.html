@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>RoughColla</title>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.3.0/fontfaceobserver.standalone.min.js"
+      integrity="sha512-w2iJFkHQo0KOdTjg5CHODlSu1d/Vv+gmH6g2pgciLfiyVwYwATt8h90S8s68yS6kQnjUh67rzBzfkGohSe7MSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/fabric"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.4.0/js/bootstrap-colorpicker.min.js"></script>
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.4.0/css/bootstrap-colorpicker.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div id="video-wrapper"></div>
+      <canvas id="canvas"></canvas>
+
+      <div>
+        <div>Images <input type="file" id="img-input" accept="image/*" /></div>
+        <div>
+          Videos <input type="file" id="video-input" accept="video/*" />
+        </div>
+      </div>
+
+      <div>
+        <input type="button" id="imageRemove" value="Remove" />
+        <input type="button" id="object-copy" value="Copy" />
+        <input type="button" id="object-paste" value="Paste" />
+      </div>
+
+      <div>
+        <input type="button" id="text-add" value="Add Text" />
+        Fonts
+        <select id="font-family"></select>
+        Color <input type="text" id="font-color" value="#000000" /> Bold
+        <input type="checkbox" id="font-bold" />
+      </div>
+
+      <div>
+        <input type="button" id="image-save" value="Save Image" />
+        <input type="button" id="canvas-dump" value="Dump Canvas" />
+        <input type="button" id="canvas-restore" value="Restore Canvas" />
+      </div>
+    </div>
+
+    <div id="demo" style="display: inline-grid">
+      <input type="text" readonly value="rgb(255, 128, 0)" />
+    </div>
+
+    <script src="./main.js"></script>
+  </body>
+</html>
