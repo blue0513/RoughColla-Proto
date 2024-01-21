@@ -26,6 +26,7 @@ const fonts = [
   "Zen Old Mincho",
 ];
 
+const dropArea = document.getElementById("drop-area");
 const imageInput = document.getElementById("img-input");
 const imageRemove = document.getElementById("imageRemove");
 const objectCopy = document.getElementById("object-copy");
@@ -44,15 +45,29 @@ const canvasRestore = document.getElementById("canvas-restore");
 // Event listeners
 // -----------------------------
 
-imageInput.addEventListener("change", (event) => {
-  const reader = new FileReader();
-  reader.onload = function (f) {
-    loadImage(f.target.result);
-  };
-
-  const image = event.target.files[0];
-  reader.readAsDataURL(image);
+dropArea.addEventListener("click", function () {
+  imageInput.click();
 });
+dropArea.addEventListener("dragover", function (e) {
+  e.preventDefault();
+  dropArea.classList.add("active");
+});
+dropArea.addEventListener("dragleave", function (e) {
+  e.preventDefault();
+  dropArea.classList.remove("active");
+});
+dropArea.addEventListener("drop", function (e) {
+  e.preventDefault();
+  dropArea.classList.remove("active");
+
+  const file = e.dataTransfer.files[0];
+  if (isVideo(file)) {
+    renderVideo(file);
+  } else {
+    renderImage(file);
+  }
+});
+
 imageRemove.addEventListener("click", handleRemove);
 
 objectCopy.addEventListener("click", Copy);
@@ -135,36 +150,6 @@ function loadImage(data) {
   });
 }
 
-document.getElementById("video-input").addEventListener("change", function () {
-  const media = URL.createObjectURL(this.files[0]);
-  const videoEl = document.createElement("video");
-  document.getElementById("video-wrapper").appendChild(videoEl);
-
-  videoEl.src = media;
-  videoEl.muted = true;
-  videoEl.controls = true;
-  videoEl.loop = true;
-  videoEl.style.display = "none";
-
-  videoEl.onloadedmetadata = function () {
-    const width = videoEl.videoWidth;
-    const height = videoEl.videoHeight;
-    videoEl.width = width;
-    videoEl.height = height;
-
-    const video1 = new fabric.Image(videoEl, {
-      left: 200,
-      top: 300,
-      originX: "center",
-      originY: "center",
-      objectCaching: false,
-    });
-
-    canvas.add(video1);
-    video1.getElement().play();
-  };
-});
-
 function loadAndUse(font) {
   const myfont = new FontFaceObserver(font);
   myfont
@@ -231,6 +216,49 @@ function Paste() {
     canvas.requestRenderAll();
   });
 }
+
+function renderVideo(file) {
+  const media = URL.createObjectURL(file);
+  const videoEl = document.createElement("video");
+  document.getElementById("video-wrapper").appendChild(videoEl);
+
+  videoEl.src = media;
+  videoEl.muted = true;
+  videoEl.controls = true;
+  videoEl.loop = true;
+  videoEl.style.display = "none";
+
+  videoEl.onloadedmetadata = function () {
+    const width = videoEl.videoWidth;
+    const height = videoEl.videoHeight;
+    videoEl.width = width;
+    videoEl.height = height;
+
+    const video1 = new fabric.Image(videoEl, {
+      left: 200,
+      top: 300,
+      originX: "center",
+      originY: "center",
+      objectCaching: false,
+    });
+
+    canvas.add(video1);
+    video1.getElement().play();
+  };
+}
+
+function renderImage(file) {
+  const reader = new FileReader();
+  reader.onload = function (f) {
+    loadImage(f.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function isVideo(file) {
+  return file && file.type.indexOf("video/") === 0;
+}
+
 // -----------------------------
 // Main
 // -----------------------------

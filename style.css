@@ -1,2 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Noto+Sans+JP:wght@700&family=Zen+Old+Mincho&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Shippori+Antique+B1&family=Zen+Antique&display=swap");
+
+.file-drop-area {
+  border: 2px dashed #cccccc;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  margin: 10px 0;
+}
+.file-drop-area:hover {
+  background-color: #f8f8f8;
+}
+.file-drop-area.active {
+  border-color: blue;
+  background-color: lightblue;
+}
+#img-input {
+  display: none;
+}
