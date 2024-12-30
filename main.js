@@ -68,6 +68,15 @@ dropArea.addEventListener("drop", function (e) {
   }
 });
 
+imageInput.addEventListener("change", function (e) {
+  const file = e.target.files[0];
+  if (isVideo(file)) {
+    renderVideo(file);
+  } else {
+    renderImage(file);
+  }
+});
+
 imageRemove.addEventListener("click", handleRemove);
 
 objectCopy.addEventListener("click", Copy);
